@@ -3,7 +3,8 @@ import { config } from "../config/env";
 import { Role } from "../interfaces/user.interface";
 import User from "../models/User";
 import { generateTokens, verifyToken } from "../utils/jwtUtils";
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
+import type { TokenPayload } from "../utils/jwtUtils";
 import { StatusCodes } from "http-status-codes";
 
 // register
@@ -181,5 +182,31 @@ export const logout = async (req: Request, res: Response) => {
       success: false,
       msg: "Server error",
     });
+  }
+};
+
+// get current user
+export const getCurrentUser = async (
+  req: Request & { user?: TokenPayload },
+  res: Response
+) => {
+  try {
+    const userId = req.user?.userId;
+
+    const user = await User.findById(userId).select("-password");
+    if (!user) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ success: false, msg: "User not found" });
+    }
+    res.status(StatusCodes.OK).json({
+      success: true,
+      user,
+    });
+  } catch (err) {
+    console.error("Error fetching current user:", err);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ success: false, msg: "Sever error" });
   }
 };

@@ -3,12 +3,14 @@ import rateLimit from "express-rate-limit";
 import { loginValidator, registerValidator } from "../utils/authValidator";
 import { validationHandler } from "../middleware/validationHandler";
 import {
+  getCurrentUser,
   login,
   logout,
   refreshToken,
   register,
 } from "../controllers/authControllers";
 import { config } from "../config/env";
+import { authenticate, authorize } from "../middleware/authMiddleware";
 
 const router = Router();
 
@@ -36,5 +38,8 @@ router.post(
 // refresh and logout
 router.get("/refresh", refreshToken);
 router.post("/logout", logout);
+
+// get current user
+router.get("/me", authenticate, authorize, getCurrentUser);
 
 export default router;

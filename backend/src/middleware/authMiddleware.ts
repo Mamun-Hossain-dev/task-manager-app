@@ -1,9 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 import { verifyToken } from "../utils/jwtUtils";
 import { StatusCodes } from "http-status-codes";
+import type { TokenPayload } from "../utils/jwtUtils";
 
 export const authenticate = (
-  req: Request,
+  req: Request & { user?: TokenPayload },
   res: Response,
   next: NextFunction
 ) => {
@@ -26,7 +27,11 @@ export const authenticate = (
 };
 
 export const authorize = (roles: string[]) => {
-  return (req: Request, res: Response, next: NextFunction) => {
+  return (
+    req: Request & { user?: TokenPayload },
+    res: Response,
+    next: NextFunction
+  ) => {
     if (!req.user) {
       return res
         .status(StatusCodes.UNAUTHORIZED)
