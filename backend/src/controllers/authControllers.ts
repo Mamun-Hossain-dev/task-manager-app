@@ -32,7 +32,7 @@ export const register = async (req: Request, res: Response) => {
       httpOnly: true,
       secure: config.isProduction,
       sameSite: "strict",
-      maxAge: 15 * 60 * 1000,
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
     res.cookie("refreshToken", tokens.refreshToken, {
@@ -94,7 +94,7 @@ export const login = async (req: Request, res: Response) => {
       httpOnly: true,
       secure: config.isProduction,
       sameSite: "strict",
-      maxAge: 15 * 60 * 1000,
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
     res.cookie("refreshToken", tokens.refreshToken, {
@@ -147,7 +147,7 @@ export const refreshToken = async (req: Request, res: Response) => {
         role: payload.role,
       },
       config.accessSecret,
-      { expiresIn: 15 * 60 * 1000 }
+      { expiresIn: "7d" }
     );
 
     res

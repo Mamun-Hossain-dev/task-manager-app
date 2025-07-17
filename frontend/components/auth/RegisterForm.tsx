@@ -25,7 +25,7 @@ export default function RegisterForm() {
     try {
       setServerError(null); // clear previous errors
       await dispatch(registerUser(data)).unwrap();
-      router.push("/auth/login");
+      router.push("/login");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       console.error("Registration failed:", err);
@@ -39,7 +39,7 @@ export default function RegisterForm() {
         <div className="mb-4 text-red-500 text-center">{serverError}</div>
       )}
 
-      <div className="mb-4">
+      <div className="mb-4 text-gray-900">
         <label htmlFor="name" className="block text-gray-700 mb-2">
           Name
         </label>
@@ -52,7 +52,7 @@ export default function RegisterForm() {
               message: "Name must be at least 3 characters",
             },
           })}
-          className="w-full px-3 py-2 border rounded-md"
+          className="w-full px-3 py-2 border rounded-md text-black"
         />
         {errors.name && (
           <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
@@ -73,7 +73,7 @@ export default function RegisterForm() {
               message: "Invalid email format",
             },
           })}
-          className="w-full px-3 py-2 border rounded-md"
+          className="w-full px-3 py-2 border text-black rounded-md"
         />
         {errors.email && (
           <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
@@ -94,7 +94,7 @@ export default function RegisterForm() {
               message: "Password must be at least 6 characters",
             },
           })}
-          className="w-full px-3 py-2 border rounded-md"
+          className="w-full px-3 py-2 border rounded-md text-black"
         />
         {errors.password && (
           <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
