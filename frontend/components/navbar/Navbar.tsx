@@ -48,12 +48,14 @@ const Navbar = () => {
 
             {user ? (
               <>
-                <Link
-                  href="/dashboard"
-                  className="text-gray-700  hover:underline hover:text-blue-600 font-medium"
-                >
-                  Dashboard
-                </Link>
+                {user?.role === "admin" && (
+                  <Link
+                    href="/dashboard"
+                    className="text-gray-700  hover:underline hover:text-blue-600 font-medium"
+                  >
+                    Dashboard
+                  </Link>
+                )}
                 <Link
                   href="/profile"
                   className="text-gray-700 hover:underline hover:text-blue-600 font-medium"
@@ -134,12 +136,14 @@ const Navbar = () => {
 
             {user ? (
               <>
-                <Link
-                  href="/dashboard"
-                  className="block px-3 py-2 text-gray-700 hover:text-blue-600 hover:underline font-medium"
-                >
-                  Dashboard
-                </Link>
+                {user.role === "admin" && (
+                  <Link
+                    href="/dashboard"
+                    className="text-gray-700  hover:underline hover:text-blue-600 font-medium"
+                  >
+                    Dashboard
+                  </Link>
+                )}
                 <Link
                   href="/profile"
                   className="block px-3 py-2 hover:underline text-gray-700 hover:text-blue-600 font-medium"
